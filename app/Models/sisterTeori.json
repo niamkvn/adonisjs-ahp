@@ -1,0 +1,59 @@
+[
+  {
+    "kareakter": [
+      { "concurrency": ["eksekusi program bersamaan", "berbagi sumber daya"] },
+      {
+        "no global clock": [
+          "tidak ada waktu yang sama",
+          "koordinasi program dengan pertukaran pesan"
+        ]
+      },
+      {
+        "independent failures": [
+          "jika subsistem gagal, bagian yang lain tidak tahu."
+        ]
+      }
+    ]
+  },
+  {
+    "tantangan": [
+      { "heterogeneity": ["networks", "computer hardware", "os"] },
+      { "openness": ["can be extended", "reimplemented"] },
+      {
+        "security": [
+            {"confidentiality": "protect against disclosure to authorized individuals"},
+            {"intefrity": "protect against corruption"},
+            {"availability": "protect against interference"}
+        ]
+      },
+      {
+        "scalability": [
+          { "availability": "protect against interference" }
+        ]
+      },
+      {
+        "failure handling": [
+          "deteksi keesalahan",
+          "recovery",
+          "redundancy; backup system"
+        ]
+      },
+      {
+        "quality of services": [
+          "deteksi keesalahan",
+          "recovery",
+          "redundancy; backup system"
+        ]
+      }
+    ]
+  }
+]
+http concept 
+client server
+security
+cloud computing
+clustering server
+optimasi server
+
+
+

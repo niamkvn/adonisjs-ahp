@@ -1,0 +1,453 @@
+@layout('layouts.main')
+@section('content')
+@set('title', "Kriteria")
+    <div class="container-scroller">
+        <!-- partial:../../partials/_navbar.html -->
+        @include('partials._navbar')
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper">
+            <!-- partial:../../partials/_sidebar.html -->
+            @include('partials._sidebar')
+            <!-- partial -->
+            <div class="main-panel">
+                <div class="content-wrapper">
+                    <div class="row">
+                        <div class="col-lg-12 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">Data Kriteria</h4>
+                                    <div class="row mb-4">
+                                        <div class="col-12 text-right">
+                                            <!--
+                                            <button data-toggle="modal" data-target="#simpanPembobotan" type="button" class="btn btn-success btn-md">
+                                                <i class="ti-plus btn-icon-prepend"></i>
+                                                Simpan
+                                            </button>
+                                            -->
+                                            <button onclick="openModal('POST')" type="button" class="btn btn-success btn-md">
+                                                <i class="ti-plus btn-icon-prepend"></i>
+                                                Simpan
+                                            </button>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 pembobotan">
+                                            <div class="row text-center align-items-center">
+                                                <div class="col-3 k_banding">
+                                                    <p class="k_banding"></p>
+                                                </div>
+                                                <div class="col-6">
+                                                    <select class="form-control skala">
+                                                    </select>
+                                                </div>
+                                                <div class="col-3">
+                                                    <p class="k_pembanding"></p>
+                                                </div>
+                                            </div>
+                                            <div class="messages"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                             <!-- Pagination -->
+                            @if(kriterias.total > 0)
+                            <ul class="pagination text-center">
+                                @if(kriterias.page == 1)
+                                <li class="disabled p-2"><a>First</a></li>
+                                @else
+                                <li class="p-2"><a href="?page=1">First</a></li>
+                                @endif
+                                @set('i', kriterias.page > 5 ? kriterias.page - 4 : 1  )
+                                @if(i !== 1)
+                                <li class="disabled p-2"><a>...</a></li>
+                                @endif
+                                @each(page in range(i, (kriterias.page + 5) ))
+                                @if(page <= kriterias.lastPage)
+                                @if(page == kriterias.page)
+                                    <li class="active p-2"><a>{{page}}</a></li>
+                                @else
+                                    <li class="p-2"><a href="?page={{page}}">{{page}}</a></li>
+                                @endif
+                                @if(page == kriterias.page + 4 && page < kriterias.lastPage )
+                                    <li class="disabled p-2"><a>...</a></li>
+                                @endif
+                                @endif
+                                @endeach
+                                @if(kriterias.page == kriterias.lastPage)
+                                <li class="disabled p-2"><a>Last</a></li>
+                                @else
+                                <li class="p-2"><a href="?page={{kriterias.lastPage}}">Last</a></li>
+                                @endif
+                            </ul>
+                            @endif
+                            <!-- End Pagination -->
+                        </div>
+                    </div>
+                </div>
+                 <!-- content-wrapper ends -->
+                <!-- partial:../../partials/_footer.html -->
+                @include('partials._footer')
+                <!-- partial -->
+            </div>
+            <!-- main-panel ends -->
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+
+    <!-- Modals -->
+    <!-- kriteria.store -->
+    <div id="simpanPembobotan" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Pembobotan Kriteria</h5>
+                    <button type="button" class="tombol-close close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div style="border:3px dashed #F5A623" class="m-3 row info_perhitungan">
+                                <div class="col-10 pl-0">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" width="100%">
+                                            <thead class="h_kriteria">
+                                            </thead>
+                                            <tbody class="v_kriteria">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-2 pl-1 pr-0">
+                                    <div class="table-responsive text-center">
+                                        <table class="table table-bordered" width="100%">
+                                            <thead>
+                                                <th>Bobot</th>
+                                            </thead>
+                                            <tbody class="bobot">
+                                                <tr class="py-4" style="background: rgba(0, 0, 0, 0.3)">
+                                                    <td class="progress-bar bg-primary text-dark" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+                                                        0.2310
+                                                    </td>
+                                                </tr>
+                                                <tr class="py-4" style="background: rgba(0, 0, 0, 0.3)">
+                                                    <td class="progress-bar bg-primary text-dark" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                                        0.1450
+                                                    </td>
+                                                </tr>
+                                                <tr class="py-4" style="background: rgba(0, 0, 0, 0.3)">
+                                                    <td class="progress-bar bg-primary text-dark" role="progressbar" style="width: 17%" aria-valuenow="17" aria-valuemin="0" aria-valuemax="100">
+                                                        0.1322
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="konsistensi col-12 p-0"></div>
+                            </div>
+                            <div class="row m-3">
+                                <div class="col-12">
+                                    <h5 class="pesan"></h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button onclick="simpanPembobotan()" type="button" class="btn_konfirmasi btn btn-warning">Ya, simpan</button>
+                    <button type="button" class="tombol-close btn btn-secondary" data-dismiss="modal">Batalkan, ulangi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End kriteria.store -->
+    <!-- kriteria.update -->
+    <div id="updateKriteria" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Update Kriteria</h5>
+                    <button type="button" class="tombol-close close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="messages"></div>
+                            <div class="form-group">
+                                <label for="namaBaru">Nama Kriteria Baru</label>
+                                <input autofocus name="namaBaru" type="text" class="form-control" id="namaBaru" placeholder="Ketik disini...">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="tombolUpdate" type="button" class="btn btn-success">Simpan</button>
+                    <button type="button" class="tombol-close btn btn-secondary" data-dismiss="modal">Batal</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End kriteria.update -->
+    <!-- kriteria.destroy -->
+    <div id="hapusKriteria" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Hapus Kriteria</h5>
+                    <button type="button" class="tombol-close close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <p></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="tombolHapus" type="button" class="btn btn-danger">Hapus</button>
+                    <button type="button" class="tombol-close btn btn-secondary" data-dismiss="modal">Batal</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End kriteria.destroy -->
+    <!-- End Modals-->
+@endsection
+
+@section('customCss')
+    {{style('vendors/select2/select2.min.css')}}
+@endsection
+@section('customJs')
+    {{script('vendors/select2/select2.min.js')}}
+    <script>
+        let kriteria = []
+        let matriksPerbandingan = []
+        $(document).ready(()=>{
+            $.ajax({
+                url: "http://localhost:3333/api/kriteria",
+                type: "GET",
+            }).done((response) => {
+                $.each(response.data, (i, v) => {
+                    kriteria.push(response.data[i].nama)
+                })
+                // membuat pasangan perbandingan
+                for (let i = 0; i < kriteria.length; i++) {
+                    for (let j = i+1; j < kriteria.length; j++) {
+                        let row = [kriteria[i], kriteria[j],]
+                        matriksPerbandingan.push(row);
+                    }
+                }
+                // tampilkan perbandingan
+                let baris = ""
+                for (let i = 0; i < matriksPerbandingan.length; i++) {
+                    baris = baris + '<div class="row mb-4 text-center align-items-center">'
+                    baris = baris +     '<div class="col-3 text-right">'
+                    baris = baris +         '<p class="k_banding">'+ matriksPerbandingan[i][0] +'</p>'
+                    baris = baris +     '</div>'
+                    baris = baris +     '<div class="col-6">'
+                    baris = baris +         '<select class="form-control skala">'
+                    baris = baris +             '<option value="1">sama penting daripada</option>'
+                    baris = baris +             '<option value="2">mendekati sedikit lebih penting daripada</option>'
+                    baris = baris +             '<option value="3">sedikit lebih penting daripada</option>'
+                    baris = baris +             '<option value="4">mendekati kuat kepentingannya daripada</option>'
+                    baris = baris +             '<option value="5">kuat kepentingannya daripada</option>'
+                    baris = baris +             '<option value="6">mendekati sangat kuat tingkat kepentingannya daripada</option>'
+                    baris = baris +             '<option value="7">sangat kuat tingkat kepentingannya daripada</option>'
+                    baris = baris +             '<option value="8">mendekati mutlak lebih penting daripada</option>'
+                    baris = baris +             '<option value="9">mutlak lebih penting daripada</option>'
+                    baris = baris +         '</select>'
+                    baris = baris +     '</div>'
+                    baris = baris +     '<div class="col-3 text-left">'
+                    baris = baris +         '<p class="k_banding">'+ matriksPerbandingan[i][1] +'</p>'
+                    baris = baris +     '</div>'
+                    baris = baris + '</div>'
+                }
+                $(".pembobotan").html(baris)
+                $('.skala').select2();
+            }).fail((jqXHR, textStatus) => {
+                alert( "Maaf, terjadi kesalahan. Error: " + textStatus );
+            });
+        })
+        
+        // ========== Utilitas ==========
+        // Auto Focus Inputs
+        $('.modal').on('shown.bs.modal', function() {
+            $(this).find('[autofocus]').focus();
+        });
+        
+        // Reset Inputs and Messages
+        $(".tombol-close").on('click', ()=>{
+            $(".modal-body .messages").html("")
+            $("input").val("")
+        })
+        // ========== End Utilitas ==========
+        
+        // ========== CRUD ===========
+        function openModal(method, id="", nama=""){
+            switch(method){
+                case "POST":
+                    matriksPerbandingan = []
+                    // membuat pasangan perbandingan
+                    for (let i = 0; i < kriteria.length; i++) {
+                        for (let j = i+1; j < kriteria.length; j++) {
+                            let row = [kriteria[i], kriteria[j],]
+                            matriksPerbandingan.push(row);
+                        }
+                    }
+                    $.each($(".skala"),(i, element) => {
+                        matriksPerbandingan[i].push($(element).val())
+                    });
+                    $.ajax({
+                        url: "http://localhost:3333/kriteria/pembobotan",
+                        type: "POST",
+                        data: {
+                            kriteria,
+                            matriksPerbandingan
+                        }
+                    }).done((response) => {
+                        let baris = ""
+                        baris = baris + '<th>#</th>'
+                        $.each(response.kriteria, (i, element)=>{
+                            baris = baris + '<th>' + response.kriteria[i]  +'</th>'
+                        })
+                        $(".h_kriteria").html(baris)
+
+                        baris = ''
+                        for (let i = 0; i < response.matriksNormalisasi.length; i++) {
+                            baris = baris + '<tr>'
+                            baris = baris + '<td><strong>' + response.kriteria[i] + '</strong></td>'
+                            for (let j = 0; j < response.matriksNormalisasi.length; j++) {
+                                baris = baris + '<td>' + response.matriksNormalisasi[i][j].toFixed(4) + '</td>'
+                            }
+                            baris = baris +'</tr>'
+                        }
+                        $(".v_kriteria").html(baris)
+
+                        baris = ""
+                        $.each(response.bobotKriteria_eigenVektor, (i, element)=>{
+                            baris = baris + '<tr class="py-4" style="background: rgba(0, 0, 0, 0.3)">'
+                            let total = response.vekTotalNormalisasi[i]
+                            let persentase = response.bobotKriteria_eigenVektor[i].bobot * 100
+                            baris = baris + '<td class="progress-bar bg-primary text-dark" role="progressbar" style="width: ' + persentase + '%">'
+                            baris = baris + response.bobotKriteria_eigenVektor[i].bobot.toFixed(4)
+                            baris = baris + '</td>'
+                            baris = baris + '</tr>'
+                        })
+                        $(".bobot").html(baris)
+
+                        baris = ""
+                        let pesan = ""
+                        if(response.cr > 0.1){
+                            baris = baris + '<p class="p-2 m-0 bg-warning">Konsistensi Ratio(CR): ' + response.cr.toFixed(4)  + '</p>'
+                            pesan = "Nilai CR > 0.1 (tidak konsisten), tetap simpan?"
+                            $(".btn_konfirmasi").removeClass("btn-success")
+                            $(".btn_konfirmasi").addClass("btn-warning")
+                            $(".info_perhitungan").css("border", "3px dashed #F5A623")
+                        }else{
+                            baris = baris + '<p class="p-2 m-0 bg-success">Konsistensi Ratio(CR): ' + response.cr.toFixed(4)  + '</p>'
+                            pesan = "Nilai CR <= 0.1 (konsisten), simpan?"
+                            $(".btn_konfirmasi").removeClass("btn-warning")
+                            $(".btn_konfirmasi").addClass("btn-success")
+                            $(".info_perhitungan").css("border", "3px dashed #71C016")
+                        }
+                        console.log("clicked")
+                        $(".konsistensi").html(baris)
+                        $(".pesan").html(pesan)
+                        // $("#simpanPembobotan .messages").
+                        $("#simpanPembobotan").modal("show")
+                        // $("#tombolUpdate").attr("onclick", "updateKriteria("+ id + ")");
+                    }).fail((jqXHR, textStatus) => {
+                        console.log(jqXHR)
+                        alert( "Maaf, terjadi kesalahan. Error: " + textStatus );
+                    });
+                    break;
+                case "PUT":
+                    $.ajax({
+                        url: "http://localhost:3333/api/kriteria/"+ id,
+                        type: "GET",
+                    }).done((response) => {
+                        $('#updateKriteria input[name="namaBaru"]').val(response.nama)
+                        $("#tombolUpdate").attr("onclick", "updateKriteria("+ id + ")");
+                        $('#updateKriteria').modal('show')
+                    }).fail((jqXHR, textStatus) => {
+                        alert( "Maaf, terjadi kesalahan. Error: " + textStatus );
+                    });
+                    break;
+                case"DELETE":
+                    $('#hapusKriteria p').text("Apakah anda yakin akan menghapus kriteria dengan nama " + nama + " ?")
+                    $("#tombolHapus").attr("onclick", "hapusKriteria("+ id + ", '" + nama + "')");
+                    $('#hapusKriteria').modal('show')
+                    break;
+                default: 
+                    break;
+            }
+        }
+
+        function simpanPembobotan(){
+            $.ajax({
+                url: "http://localhost:3333/kriteria/pembobotan/simpan",
+                type: "POST",
+                data: {
+                    kriteria,
+                    matriksPerbandingan
+                }
+            }).done((response) => {
+                // $("#simpanPembobotan .messages").
+                $("#simpanPembobotan").modal("show")
+                // $("#tombolUpdate").attr("onclick", "updateKriteria("+ id + ")");
+            }).fail((jqXHR, textStatus) => {
+                console.log(jqXHR)
+                alert( "Maaf, terjadi kesalahan. Error: " + textStatus );
+            });
+        }
+
+        function updateKriteria(id){
+            $.ajax({
+                url: "http://localhost:3333/api/kriteria/"+ id,
+                type: "PUT",
+                dataType: "json",
+                data: {
+                    nama: $("#namaBaru").val()
+                }
+            }).done((response) => {
+                location.reload()
+            }).fail((jqXHR, textStatus) => {
+                if(jqXHR.status == 422){
+                    let {notification} = JSON.parse(jqXHR.responseText)
+                    let baris = '<div class="alert alert-' + notification.type + '" role="alert">'
+                    $.each(notification.messages, (i, v) => {
+                        baris = baris + '<i class="ti-alert btn-icon-prepend"></i> ' + notification.messages[i].message
+                    })
+                        baris = baris + '</div>'
+                    $(".modal-body .messages").html(baris)
+                }else{
+                    alert( "Maaf, terjadi kesalahan. Error: " + textStatus );
+                }
+            });
+        }
+
+        function hapusKriteria(id, nama){
+            $.ajax({
+                url: "http://localhost:3333/api/kriteria/"+ id,
+                type: "DELETE"
+            }).done((response) => {
+                location.reload()
+            }).fail((jqXHR, textStatus) => {
+                alert( "Maaf, terjadi kesalahan. Error: " + textStatus );
+            });
+        }
+        // ========== End CRUD ===========
+    </script>
+@endsection
